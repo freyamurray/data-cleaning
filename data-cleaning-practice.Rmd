@@ -15,6 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 #==================
 
 library(tidyverse)
+library(data.table)
 ```
 
 ```{r}
@@ -24,4 +25,27 @@ library(tidyverse)
 
 df <- read.csv("my_file (1).csv")
 ```
+
+```{r}
+#==================
+# Remove unnecessary columns
+#==================
+
+df_remove <- df %>% 
+  select(-Peak, -All.Time.Peak, -Ref.)
+```
+
+```{r}
+#==================
+# Renaming columns to more suitable keywords
+#==================
+
+colnames(df_remove) <- c("rank", "gross_revenue", "gross_2022_eq", "artist", "tour_title", "years", "shows", "gross_avg")
+
+```
+
+
+
+
+
 
