@@ -1,0 +1,27 @@
+---
+title: "data cleaning practice"
+author: "Freya Murray"
+date: "2026-01-30"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r message=FALSE}
+#==================
+# Load dependencies
+#==================
+
+library(tidyverse)
+```
+
+```{r}
+#==================
+# Load in data
+#==================
+
+df <- read.csv("my_file (1).csv")
+```
+
