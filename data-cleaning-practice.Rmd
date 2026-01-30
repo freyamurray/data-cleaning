@@ -40,10 +40,26 @@ df_remove <- df %>%
 # Renaming columns to more suitable keywords
 #==================
 
-colnames(df_remove) <- c("rank", "gross_revenue", "gross_2022_eq", "artist", "tour_title", "years", "shows", "gross_avg")
-
+colnames(df_remove) <- c("rank", "gross_revenue", "gross_2022", "artist", "tour_title", "years", "shows", "gross_avg") 
 ```
 
+```{r}
+#==================
+# Reordering columns so all revenue columns are next to each other
+#==================
+
+df_ordered <- df_remove[,c(1, 4, 5, 6, 7, 2, 3, 8)]
+```
+
+
+```{r}
+#==================
+# Removing $ signs from revenue columns, setting as numeric
+#==================
+
+
+
+```
 
 
 
