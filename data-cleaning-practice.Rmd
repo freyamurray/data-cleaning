@@ -48,18 +48,62 @@ colnames(df_remove) <- c("rank", "gross_revenue", "gross_2022", "artist", "tour_
 # Reordering columns so all revenue columns are next to each other
 #==================
 
-df_ordered <- df_remove[,c(1, 4, 5, 6, 7, 2, 3, 8)]
+df_ordered <- df_remove[ , c(1, 4, 5, 6, 7, 2, 3, 8)]
 ```
 
 
 ```{r}
 #==================
-# Removing $ signs from revenue columns, setting as numeric
+# Removing special characters from tour title column
 #==================
 
+df_renamed <- df_ordered %>%
+  mutate("tour_title"= gsub("[[:punct:]]|[[4a]]|[[21a]]", "", df_ordered$tour_title)) %>%
 
 
+print(df_ordered$tour_title)
+print("FIX APPLIED")
+print(df_renamed$tour_title)
 ```
+
+```{r}
+#==================
+# Removing special characters from gross columns, converting column type to numeric
+#==================
+
+df_renamed2 <- df_renamed %>%
+  mutate("gross_revenue" = gsub("[[:punct:]]|[b]|[e]", "", df_renamed$gross_revenue)) %>%
+  mutate("gross_2022" = gsub("[[:punct:]]", "", df_renamed$gross_2022)) %>%
+  mutate("gross_avg" = gsub("[[:punct:]]|[b]|[e]", "", df_renamed$gross_revenue))
+
+df_renamed2$gross_revenue <- as.numeric(df_renamed2$gross_revenue)  
+df_renamed2$gross_2022 <- as.numeric(df_renamed2$gross_2022) 
+df_renamed2$gross_avg <- as.numeric(df_renamed2$gross_avg) 
+  
+
+print(head(df_renamed$gross_revenue))
+print("FIX APPLIED")
+print(head(df_renamed2$gross_revenue))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
