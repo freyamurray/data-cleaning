@@ -1,2 +1,2 @@
 ## Data cleaning practice
-A little practical example of my work - cleaning and visualising a messy dataset from <a href = "https://www.kaggle.com/datasets/amruthayenikonda/dirty-dataset-to-practice-data-cleaning?resource=download">kaggle</a>, using R.
+A little practical example of my work - cleaning and visualising a messy dataset from <a href = "https://www.kaggle.com/datasets/amruthayenikonda/dirty-dataset-to-practice-data-cleaning?resource=download">kaggle</a>, using R. The <a href = "https://github.com/freyamurray/data-cleaning/blob/master/data-cleaning-practice%20copy.md">markdown version</a> is the easiest and most pleasant to read on github!
