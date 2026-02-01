@@ -32,7 +32,7 @@ df <- read.csv("my_file (1).csv")
 #==================
 
 df_remove <- df %>% 
-  select(-Peak, -All.Time.Peak, -Ref.)
+  select(-Peak, -All.Time.Peak, -Ref., -Rank)
 ```
 
 ```{r}
@@ -40,7 +40,7 @@ df_remove <- df %>%
 # Renaming columns to more suitable keywords
 #==================
 
-colnames(df_remove) <- c("rank", "gross_revenue", "gross_2022", "artist", "tour_title", "years", "shows", "gross_avg") 
+colnames(df_remove) <- c("gross_revenue", "gross_2022", "artist", "tour_title", "years", "shows", "gross_avg") 
 ```
 
 ```{r}
@@ -48,7 +48,7 @@ colnames(df_remove) <- c("rank", "gross_revenue", "gross_2022", "artist", "tour_
 # Reordering columns so all revenue columns are next to each other
 #==================
 
-df_ordered <- df_remove[ , c(1, 4, 5, 6, 7, 2, 3, 8)]
+df_ordered <- df_remove[ , c(3, 4, 5, 6,1, 2, 7)]
 ```
 
 
@@ -74,7 +74,7 @@ print(df_renamed$tour_title)
 df_renamed2 <- df_renamed %>%
   mutate("gross_revenue" = gsub("[[:punct:]]|[b]|[e]", "", df_renamed$gross_revenue)) %>%
   mutate("gross_2022" = gsub("[[:punct:]]", "", df_renamed$gross_2022)) %>%
-  mutate("gross_avg" = gsub("[[:punct:]]|[b]|[e]", "", df_renamed$gross_revenue))
+  mutate("gross_avg" = gsub("[[:punct:]]|[b]|[e]", "", df_renamed$gross_avg))
 
 df_renamed2$gross_revenue <- as.numeric(df_renamed2$gross_revenue)  
 df_renamed2$gross_2022 <- as.numeric(df_renamed2$gross_2022) 
@@ -86,12 +86,56 @@ print("FIX APPLIED")
 print(head(df_renamed2$gross_revenue))
 ```
 
+```{r}
+#==================
+# Adding a total revenue column
+#==================
+
+df_totals <- df_renamed2 %>%
+  group_by(artist) %>%
+  mutate("total_revenue" = sum(gross_revenue))
+```
 
 
 
+```{r}
+#==================
+# Setting final data frame
+#==================
+
+df_final <- df_totals
+```
+
+
+```{r}
+#==================
+# Creating visualisations
+#==================
+
+ggplot(df_final, aes(reorder(artist, total_revenue), (gross_revenue/1000000), fill = artist)) +
+  geom_bar(stat = "identity", show.legend = FALSE, alpha = .75) +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Paired") +
+  labs(title = "Total Tour Revenue by Artist", x = "Artist", y = "Gross Revenue ($ million)") 
+
+```
 
 
 
+```{r}
+#==================
+# making a sub data frame for only Taylor Swift
+#==================
+
+df_ts <- df_final %>%
+  filter(artist == "Taylor Swift")
+
+ggplot(df_ts, aes(reorder(tour_title, gross_revenue), (gross_revenue/1000000), fill = tour_title)) +
+  geom_bar(stat = "identity", show.legend = FALSE) +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Set2") +
+  labs(title = "Taylor Swift Tour Revenue", x = "Tour Name", y="Revenue ($ million)")
+```
 
 
 
